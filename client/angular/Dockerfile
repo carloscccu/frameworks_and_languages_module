@@ -4,13 +4,13 @@ WORKDIR /app
 COPY angular-app/package.json angular-app/package-lock.json* ./
 RUN npm install
 COPY angular-app/ .
-RUN npm run build
+RUN npm run build && ls -l /app/dist
 
-# Stage 2: Serve the app with Nginx
+
+# Stage 2: Serve the application using Nginx
 FROM nginx:alpine
-RUN rm /usr/share/nginx/html/index.html
-COPY --from=build-stage /app/dist/angular-app/browser /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=build-stage /app/dist/angular-app /usr/share/nginx/html
+EXPOSE 8001
 
-
+# Customize default nginx configuration
+RUN echo "server { listen 8001; root /usr/share/nginx/html/browser; index index.html; }" > /etc/nginx/conf.d/default.conf
