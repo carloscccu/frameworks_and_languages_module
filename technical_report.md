@@ -21,7 +21,7 @@ The absence of a modular, component-based design in the client prototype could l
 
 ### Basic Server Structure (Server)
 
-# Simplified Python server structure without advanced features
+### Simplified Python server structure without advanced features
 ```python
 def app(request):
     # Request handling logic
